@@ -5,6 +5,12 @@ import 'package:student_lecture_app/core/routes/app_router.gr.dart';
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> routes = [
-    AutoRoute(page: SplashRoute.page, initial: true),
+    AutoRoute(page: ChooseSectionRoute.page, initial: true),
+    AutoRoute(page: DummyUIRoute.page),
+    AutoRoute(page: CounterExampleRoute.page),
+    AutoRoute(page: InputValidationRoute.page),
+    AutoRoute(page: CalculatorExampleRoute.page),
+    AutoRoute(page: NewsAppRoute.page),
+    AutoRoute(page: ToDoAppExampleRoute.page),
   ];
 }
