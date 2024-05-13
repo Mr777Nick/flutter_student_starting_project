@@ -24,7 +24,7 @@ class ChooseSectionPage extends StatelessWidget {
             children: [
               ActionText(
                   onTap: () {
-                    AutoRouter.of(context).push(const DummyUIRoute());
+                    AutoRouter.of(context).push(const DummyUIStep1Route());
                   },
                   title: 'Dummy UI',
                   desc: 'Practice flutter UI and get familiar with UI Widgets'),

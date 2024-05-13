@@ -6,7 +6,8 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> routes = [
     AutoRoute(page: ChooseSectionRoute.page, initial: true),
-    AutoRoute(page: DummyUIRoute.page),
+    AutoRoute(page: DummyUIStep1Route.page),
+    AutoRoute(page: DummyUIStep2Route.page),
     AutoRoute(page: CounterExampleRoute.page),
     AutoRoute(page: InputValidationRoute.page),
     AutoRoute(page: CalculatorExampleRoute.page),
