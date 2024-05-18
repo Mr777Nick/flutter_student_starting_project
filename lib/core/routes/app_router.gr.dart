@@ -19,7 +19,7 @@ import 'package:student_lecture_app/presentation/pages/dummy_ui/dummy_ui_step1_p
     as _i4;
 import 'package:student_lecture_app/presentation/pages/dummy_ui/dummy_ui_step2_page.dart'
     as _i5;
-import 'package:student_lecture_app/presentation/pages/input_validation_page.dart'
+import 'package:student_lecture_app/presentation/pages/input_validation/input_validation_page.dart'
     as _i6;
 import 'package:student_lecture_app/presentation/pages/news_app_page.dart'
     as _i7;
