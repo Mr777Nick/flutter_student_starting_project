@@ -36,6 +36,7 @@ class CalculatorState with _$CalculatorState {
       subtract: () => '-',
       multiply: () => 'x',
       divide: () => '/',
+      pow: () => '^',
     );
   }
 

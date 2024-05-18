@@ -77,6 +77,13 @@ class CalculatorExamplePage extends StatelessWidget {
                         title: 'Divide',
                         isChoosen: state.choosenType(const CalculatorType.divide()),
                       ),
+                      ChipCustom(
+                        onTap: () {
+                          context.read<CalculatorCubit>().chooseType(const CalculatorType.pow());
+                        },
+                        title: 'Pow',
+                        isChoosen: state.choosenType(const CalculatorType.pow()),
+                      ),
                     ],
                   ),
                   UIHelper.verticalSpace(20),
@@ -118,6 +125,7 @@ class CalculatorExamplePage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: UIHelper.setSp(40),
                               ),
+                              softWrap: true,
                             ),
                           ],
                         ),

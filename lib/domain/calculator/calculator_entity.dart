@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:student_lecture_app/domain/calculator/history_entity.dart';
@@ -27,7 +29,10 @@ class CalculatorEntity with _$CalculatorEntity {
       );
 
   Option<FormFailure> get failureOption {
-    return FormValidator.emptyValidator(leftValue).andThen(() => FormValidator.emptyValidator(rightValue)).fold(
+    return FormValidator.emptyValidator(leftValue)
+        .andThen(() => FormValidator.emptyValidator(rightValue))
+        .andThen(() => FormValidator.customValidator(validator: _isDivideByZero))
+        .fold(
           (failure) => some(failure),
           (_) => none(),
         );
@@ -43,18 +48,24 @@ class CalculatorEntity with _$CalculatorEntity {
     );
   }
 
-  Either<String, Unit> get _emptyRightErrorMsg {
+  Either<String, Unit> get _RightErrorMsg {
     return FormValidator.emptyValidator(rightValue).fold(
       (failure) => failure.maybeWhen(
         orElse: () => right(unit),
         empty: () => left('Right form must not be empty'),
       ),
-      (_) => right(unit),
+      (_) => FormValidator.customValidator(validator: _isDivideByZero).fold(
+        (failure) => failure.maybeWhen(
+          orElse: () => right(unit),
+          costumError: () => left('Cannot be divided by zero'),
+        ),
+        (_) => right(unit),
+      ),
     );
   }
 
   String? get textErrorMsg {
-    return _emptyLeftErrorMsg.andThen(() => _emptyRightErrorMsg).fold(
+    return _emptyLeftErrorMsg.andThen(() => _RightErrorMsg).fold(
           (errorMsg) => errorMsg,
           (_) => null,
         );
@@ -63,13 +74,17 @@ class CalculatorEntity with _$CalculatorEntity {
   String get convertValue {
     RegExp regex = RegExp(r"([.]*0)(?!.*\d)");
 
-    final valueSplit = value.toString().split('.');
+    final valueSplitted = value.toString().split('.');
 
-    if (valueSplit[1].length == 1) {
+    if (valueSplitted[1].length == 1) {
       return value.toString().replaceAll(regex, '');
     }
 
     return value.toStringAsFixed(2).replaceAll(regex, '');
+  }
+
+  bool get _isDivideByZero {
+    return rightValue == '0' && type == const CalculatorType.divide();
   }
 
   bool get _isAlreadyAddedInHistories {
@@ -121,6 +136,10 @@ class CalculatorEntity with _$CalculatorEntity {
   double get divideMethod {
     return double.parse(leftValue) / double.parse(rightValue);
   }
+
+  double get powMethod {
+    return pow(double.parse(leftValue), double.parse(rightValue)).toDouble();
+  }
 }
 
 @freezed
@@ -130,4 +149,5 @@ class CalculatorType with _$CalculatorType {
   const factory CalculatorType.subtract() = _Subtract;
   const factory CalculatorType.multiply() = _Multiply;
   const factory CalculatorType.divide() = _Divide;
+  const factory CalculatorType.pow() = _Pow;
 }

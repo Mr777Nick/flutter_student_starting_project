@@ -52,6 +52,9 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         divide: () {
           saveToHistories(state.ent.divideMethod);
         },
+        pow: () {
+          saveToHistories(state.ent.powMethod);
+        },
       ),
       (failure) => emit(state.unmodified.copyWith(showError: true)),
     );
