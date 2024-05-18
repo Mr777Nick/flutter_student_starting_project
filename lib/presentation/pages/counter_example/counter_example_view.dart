@@ -16,11 +16,13 @@ class CounterExampleView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: 'add',
             child: const Icon(Icons.add),
             onPressed: () => context.read<CounterCubit>().increment(),
           ),
           UIHelper.verticalSpace(10),
           FloatingActionButton(
+            heroTag: 'remove',
             child: const Icon(Icons.remove),
             onPressed: () => context.read<CounterCubit>().decrement(),
           )
