@@ -9,7 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
-import 'package:student_lecture_app/presentation/pages/calculator_example_page.dart'
+import 'package:student_lecture_app/presentation/pages/calculator_example/calculator_example_page.dart'
     as _i1;
 import 'package:student_lecture_app/presentation/pages/choose_section_page.dart'
     as _i2;
