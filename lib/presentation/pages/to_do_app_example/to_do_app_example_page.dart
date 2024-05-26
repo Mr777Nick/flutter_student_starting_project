@@ -21,86 +21,94 @@ class ToDoAppExamplePage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ToDoCubit(),
       child: Builder(builder: (context) {
-        return BlocBuilder<ToDoCubit, ToDoState>(
-          builder: (context, state) {
-            return Scaffold(
-              appBar: const PlatformAppBar(
-                title: Text(
-                  'To Do Page',
+        return BlocListener<ToDoCubit, ToDoState>(
+          listener: (context, state) {
+            if (state.showToast) {
+              UIHelper.showToast('Please save your changes first');
+              context.read<ToDoCubit>().resetToast();
+            }
+          },
+          child: BlocBuilder<ToDoCubit, ToDoState>(
+            builder: (context, state) {
+              return Scaffold(
+                appBar: const PlatformAppBar(
+                  title: Text(
+                    'To Do Page',
+                  ),
                 ),
-              ),
-              body: Padding(
-                padding: UIHelper.padding(horizontal: 20, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextFormFieldCustom(
-                      hintText: 'Please enter your todo task...',
-                      maxLines: 3,
-                      title: 'To Do',
-                      controller: context.read<ToDoCubit>().textController,
-                      validator: (_) => state.showTextErrorMsg,
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        padding: UIHelper.padding(top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'HISTORY',
-                              style: context.textTheme.headlineSmall?.copyWith(
-                                color: ColorConstant.green,
+                body: Padding(
+                  padding: UIHelper.padding(horizontal: 20, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFormFieldCustom(
+                        hintText: 'Please enter your todo task...',
+                        maxLines: 3,
+                        title: 'To Do',
+                        controller: context.read<ToDoCubit>().textController,
+                        validator: (_) => state.showTextErrorMsg,
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          padding: UIHelper.padding(top: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'HISTORY',
+                                style: context.textTheme.headlineSmall?.copyWith(
+                                  color: ColorConstant.green,
+                                ),
                               ),
-                            ),
-                            UIHelper.verticalSpace(10),
-                            Row(
-                              children: [
-                                ChipCustom(
-                                  onTap: () {
-                                    context.read<ToDoCubit>().changeType(const ToDoHistoryType.all());
-                                  },
-                                  title: 'All',
-                                  isChoosen: state.isTypeChoosen(const ToDoHistoryType.all()),
-                                ),
-                                UIHelper.horizontalSpace(10),
-                                ChipCustom(
-                                  onTap: () {
-                                    context.read<ToDoCubit>().changeType(const ToDoHistoryType.done());
-                                  },
-                                  title: 'Done',
-                                  isChoosen: state.isTypeChoosen(const ToDoHistoryType.done()),
-                                ),
-                                UIHelper.horizontalSpace(10),
-                                ChipCustom(
-                                  onTap: () {
-                                    context.read<ToDoCubit>().changeType(const ToDoHistoryType.notDone());
-                                  },
-                                  title: ' Not Done',
-                                  isChoosen: state.isTypeChoosen(const ToDoHistoryType.notDone()),
-                                ),
-                              ],
-                            ),
-                            UIHelper.verticalSpace(20),
-                            const _ToDoHistoryWidget(),
-                          ],
+                              UIHelper.verticalSpace(10),
+                              Row(
+                                children: [
+                                  ChipCustom(
+                                    onTap: () {
+                                      context.read<ToDoCubit>().changeType(const ToDoHistoryType.all());
+                                    },
+                                    title: 'All',
+                                    isChoosen: state.isTypeChoosen(const ToDoHistoryType.all()),
+                                  ),
+                                  UIHelper.horizontalSpace(10),
+                                  ChipCustom(
+                                    onTap: () {
+                                      context.read<ToDoCubit>().changeType(const ToDoHistoryType.done());
+                                    },
+                                    title: 'Done',
+                                    isChoosen: state.isTypeChoosen(const ToDoHistoryType.done()),
+                                  ),
+                                  UIHelper.horizontalSpace(10),
+                                  ChipCustom(
+                                    onTap: () {
+                                      context.read<ToDoCubit>().changeType(const ToDoHistoryType.notDone());
+                                    },
+                                    title: ' Not Done',
+                                    isChoosen: state.isTypeChoosen(const ToDoHistoryType.notDone()),
+                                  ),
+                                ],
+                              ),
+                              UIHelper.verticalSpace(20),
+                              const _ToDoHistoryWidget(),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              bottomNavigationBar: Container(
-                margin: UIHelper.padding(vertical: 20, horizontal: 10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    context.read<ToDoCubit>().submit();
-                  },
-                  child: Text(state.ctaText),
+                bottomNavigationBar: Container(
+                  margin: UIHelper.padding(vertical: 20, horizontal: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.read<ToDoCubit>().submit();
+                    },
+                    child: Text(state.ctaText),
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         );
       }),
     );

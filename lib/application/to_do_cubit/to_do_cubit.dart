@@ -23,7 +23,15 @@ class ToDoCubit extends HydratedCubit<ToDoState> {
   }
 
   void changeType(ToDoHistoryType type) {
+    if (state.hasUnsavedChanges) {
+      emit(state.copyWith(showToast: true));
+      return;
+    }
     emit(state.copyWith.ent(type: type));
+  }
+
+  void resetToast() {
+    emit(state.copyWith(showToast: false));
   }
 
   void editToDoText(ToDoHistoryEntity ent) {
@@ -97,6 +105,7 @@ class ToDoCubit extends HydratedCubit<ToDoState> {
     return ToDoState(
       ent: ToDoEntity.fromJson(json),
       showError: false,
+      showToast: false,
     );
   }
 

@@ -7,11 +7,13 @@ class ToDoState with _$ToDoState {
   const factory ToDoState({
     required ToDoEntity ent,
     required bool showError,
+    required bool showToast,
   }) = _ToDoState;
 
   factory ToDoState.initial() => ToDoState(
         ent: ToDoEntity.empty(),
         showError: false,
+        showToast: false,
       );
 
   ToDoState get unmodified => copyWith(ent: ent.copyWith(id: 0));
@@ -27,6 +29,8 @@ class ToDoState with _$ToDoState {
   String? get showTextErrorMsg => showError ? ent.errorMessage : null;
 
   String get ctaText => newToDo ? 'Save' : 'Update';
+
+  bool get hasUnsavedChanges => ent != unmodified.ent;
 
   List<ToDoHistoryEntity> get histories => ent.type.when(
         all: () => ent.histories,
