@@ -24,7 +24,7 @@ import 'package:student_lecture_app/presentation/pages/input_validation/input_va
 import 'package:student_lecture_app/presentation/pages/news_app_page.dart'
     as _i7;
 import 'package:student_lecture_app/presentation/pages/splash_page.dart' as _i8;
-import 'package:student_lecture_app/presentation/pages/to_do_app_example_page.dart'
+import 'package:student_lecture_app/presentation/pages/to_do_app_example/to_do_app_example_page.dart'
     as _i9;
 
 abstract class $AppRouter extends _i10.RootStackRouter {
